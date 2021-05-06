@@ -35,7 +35,7 @@ The distance between two nodes *u* and *v* is defined as the [Hamming distance](
 
 ## On optimality:
 This implementation could be significantly sped up by using ints, bitmaps, and the bitwise xor operator instead
-of the strings, itertools.combinations, and index replacement I use here. In the event that this more optimal implementation were to become useful, I would refactor it as such.
+of the strings, itertools.combinations, and index replacement I use here. In the event that this more optimal implementation were to become useful, I would rewrite it appropriately.
 
 ## To run: ##
 1. Make sure you have python3 installed in your current environment
