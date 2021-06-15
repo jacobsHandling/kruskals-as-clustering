@@ -1,5 +1,22 @@
 # Clustering with Kruskal's algorithm and the Union Find data structure
-Here are my implementations of Kruskal's algorithm and the union find data structure applied to the clustering problem as presented in week 2 of Professor Tim Roughgarden's Stanford Online course entitled, ["Greedy Algorithms, Minimum Spanning Trees, and Dynamic Programming"](https://www.coursera.org/learn/algorithms-greedy/exam/bBxNY/programming-assignment-2). Below is a paraphrasing of that presentation:
+Here are my implementations of Kruskal's algorithm and the union find data structure applied to the clustering problem as presented in week 2 of Tim Roughgarden's Stanford Online course entitled, ["Greedy Algorithms, Minimum Spanning Trees, and Dynamic Programming"](https://www.coursera.org/learn/algorithms-greedy/exam/bBxNY/programming-assignment-2). See **The Problem** below for a paraphrasing of that presentation.
+
+I’m proud of this code because it represents
+my successful application of a range of new skills to a challenging problem.
+First, I was able to internalize a significant amount of new theoretical
+background, in this case graph theory including Kruskal’s minimum spanning tree
+algorithm, the union-find data structure, k-clustering, and how these concepts
+can all work together. I was then able to apply this background to creating a
+solution to a new challenge, in this case, the clustering problem as applied to
+a complete graph with implicitly defined edge costs in the form of hamming
+distances between binary strings. Finally, I was able to take this solution and
+successfully implement it using my growing skills as a programmer.
+
+This was a relatively abstract problem, but it
+demonstrates a process that I have also been able to leverage in tackling more
+project-specific challenges: thoroughly understanding difficult material and
+then immediately applying it. I look forward to developing increasingly large,
+more demanding real-world solutions using a similar process.
 
 ## The Problem:
 
