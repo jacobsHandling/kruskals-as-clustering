@@ -15,23 +15,33 @@ class BigCluster():
         self.load_node_data(filename)
 
 
+    # def load_node_data(self, filename: str):
+
+        # with open(filename) as fh:
+
+        #     metadata = fh.readline().split()
+        #     print('Loading ' + metadata[0] + ' ' + metadata[1] + '-bit nodes')
+
+        #     def remove_node_str_whitespace(node_str: str):
+        #         compact_node_str = node_str.strip().replace(' ', '')
+        #         return compact_node_str
+            
+        #     def add_node(compact_node_str: str):
+        #         self.cluster_field.add_node_str(compact_node_str)
+
+        #     raw_node_str = fh.readline()
+        #     while raw_node_str:
+        #         add_node(remove_node_str_whitespace(raw_node_str))
+        #         raw_node_str = fh.readline()
+        #     print(f'Loaded {len(self.cluster_field.nodes)} nodes')
+
     def load_node_data(self, filename: str):
-
         with open(filename) as fh:
-
             metadata = fh.readline().split()
             print('Loading ' + metadata[0] + ' ' + metadata[1] + '-bit nodes')
-
-            def remove_node_str_whitespace(node_str: str):
-                compact_node_str = node_str.strip().replace(' ', '')
-                return compact_node_str
-            
-            def add_node(compact_node_str: str):
-                self.cluster_field.add_node_str(compact_node_str)
-
             raw_node_str = fh.readline()
             while raw_node_str:
-                add_node(remove_node_str_whitespace(raw_node_str))
+                self.cluster_field.add_node_str(raw_node_str.strip().replace(' ', ''))
                 raw_node_str = fh.readline()
             print(f'Loaded {len(self.cluster_field.nodes)} nodes')
 
