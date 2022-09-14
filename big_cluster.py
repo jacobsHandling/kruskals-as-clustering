@@ -3,6 +3,8 @@ from unionfind_bigcluster import UFNode, UnionFind
 import itertools
 import time
 
+EDGE_COST = 1
+
 class BigCluster:
     def __init__(self, filename: str = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'clustering_big.txt'), min_spacing: int = 3):  # by default, looks for the input in file "clustering_big.txt" in the same directory as this script
         self.edge_costs = []
@@ -27,12 +29,11 @@ class BigCluster:
             present_neighbors = self._find_present_neighbors(possible_neighbors)
 
             # add edges
-            edge_cost = 1
             for edge_cost_neighbors in present_neighbors:
-                if edge_cost not in self.edge_endpoints:
-                    self.edge_endpoints[edge_cost] = set()
+                if EDGE_COST not in self.edge_endpoints:
+                    self.edge_endpoints[EDGE_COST] = set()
                 for neighbor_str in edge_cost_neighbors:
-                    self.edge_endpoints[edge_cost].add((node_str, neighbor_str))
+                    self.edge_endpoints[EDGE_COST].add((node_str, neighbor_str))
 
     def _calculate_possible_neighbors_iter(self, node_str: str) -> list:
         possible_edge_costs = range(self.min_spacing)
