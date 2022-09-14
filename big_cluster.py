@@ -3,11 +3,8 @@ from unionfind_bigcluster import UFNode, UnionFind
 import itertools
 import time
 
-class BigCluster():
-
-
+class BigCluster:
     def __init__(self, filename: str = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'clustering_big.txt'), min_spacing: int = 3):  # by default, looks for the input in file "clustering_big.txt" in the same directory as this script
-
         self.edge_costs = []
         self.edge_endpoints = {}  # { edge_cost: {(endpoint, endpoint)} } - still allows for (and there will be) duplicate edges with endpoints reversed - doesn't matter because the 2 endpoints will be unioned the first time their edge is considered, meaning the 2nd will be overlooked
         self.min_spacing = min_spacing
@@ -25,11 +22,10 @@ class BigCluster():
             print(f'Loaded {len(self.cluster_field.nodes)} nodes')
 
     def add_relevant_edges(self):
-
         for node_str in self.cluster_field.nodes:
             possible_neighbors = self._calculate_possible_neighbors_iter(node_str)
             present_neighbors = self._find_present_neighbors(possible_neighbors)
-            
+
             # add edges
             edge_cost = 1
             for edge_cost_neighbors in present_neighbors:
@@ -37,10 +33,8 @@ class BigCluster():
                     self.edge_endpoints[edge_cost] = set()
                 for neighbor_str in edge_cost_neighbors:
                     self.edge_endpoints[edge_cost].add((node_str, neighbor_str))
-   
 
     def _calculate_possible_neighbors_iter(self, node_str: str) -> list:
-
         possible_edge_costs = range(self.min_spacing)
         possible_neighbors = [set() for cost in possible_edge_costs] # [{possible neighbors of cost 1}, {of cost 2}, ...]
         positions = [i for i in range(len(node_str))]
