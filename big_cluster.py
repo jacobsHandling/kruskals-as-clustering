@@ -26,16 +26,6 @@ class BigCluster():
 
     def add_relevant_edges(self):
 
-        def find_present_neighbors(possible_neighbors: list) -> list:
-            present_neighbors = [set() for edge_cost_possible_neighbors in possible_neighbors]
-            present_neighbors_index = 0
-            for edge_cost_possible_neighbors in possible_neighbors:
-                for possible_neighbor_str in edge_cost_possible_neighbors:
-                    if possible_neighbor_str in self.cluster_field.nodes:
-                        present_neighbors[present_neighbors_index].add(possible_neighbor_str)
-                present_neighbors_index += 1
-
-            return present_neighbors
 
         def add_edges(node_str: str, present_neighbors: list) -> None:
             edge_cost = 1
@@ -48,7 +38,7 @@ class BigCluster():
 
         for node_str in self.cluster_field.nodes:
             possible_neighbors = self._calculate_possible_neighbors_iter(node_str)
-            present_neighbors = find_present_neighbors(possible_neighbors)
+            present_neighbors = self._find_present_neighbors(possible_neighbors)
             add_edges(node_str, present_neighbors)
    
 
@@ -67,6 +57,16 @@ class BigCluster():
                         possible_neighbors[neighbor_cost_index].add(''.join(node_str_swapping))
                     neighbor_cost_index += 1
         return possible_neighbors
+
+    def _find_present_neighbors(self, possible_neighbors: list) -> list:
+        present_neighbors = [set() for edge_cost_possible_neighbors in possible_neighbors]
+        present_neighbors_index = 0
+        for edge_cost_possible_neighbors in possible_neighbors:
+            for possible_neighbor_str in edge_cost_possible_neighbors:
+                if possible_neighbor_str in self.cluster_field.nodes:
+                    present_neighbors[present_neighbors_index].add(possible_neighbor_str)
+            present_neighbors_index += 1
+        return present_neighbors
 
     def get_k_min_spacing(self):
 
