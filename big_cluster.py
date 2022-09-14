@@ -26,20 +26,17 @@ class BigCluster():
 
     def add_relevant_edges(self):
 
-
-        def add_edges(node_str: str, present_neighbors: list) -> None:
+        for node_str in self.cluster_field.nodes:
+            possible_neighbors = self._calculate_possible_neighbors_iter(node_str)
+            present_neighbors = self._find_present_neighbors(possible_neighbors)
+            
+            # add edges
             edge_cost = 1
             for edge_cost_neighbors in present_neighbors:
                 if edge_cost not in self.edge_endpoints:
                     self.edge_endpoints[edge_cost] = set()
                 for neighbor_str in edge_cost_neighbors:
                     self.edge_endpoints[edge_cost].add((node_str, neighbor_str))
-
-
-        for node_str in self.cluster_field.nodes:
-            possible_neighbors = self._calculate_possible_neighbors_iter(node_str)
-            present_neighbors = self._find_present_neighbors(possible_neighbors)
-            add_edges(node_str, present_neighbors)
    
 
     def _calculate_possible_neighbors_iter(self, node_str: str) -> list:
