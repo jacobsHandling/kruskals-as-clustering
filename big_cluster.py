@@ -14,27 +14,6 @@ class BigCluster():
         self.cluster_field = UnionFind()
         self.load_node_data(filename)
 
-
-    # def load_node_data(self, filename: str):
-
-        # with open(filename) as fh:
-
-        #     metadata = fh.readline().split()
-        #     print('Loading ' + metadata[0] + ' ' + metadata[1] + '-bit nodes')
-
-        #     def remove_node_str_whitespace(node_str: str):
-        #         compact_node_str = node_str.strip().replace(' ', '')
-        #         return compact_node_str
-            
-        #     def add_node(compact_node_str: str):
-        #         self.cluster_field.add_node_str(compact_node_str)
-
-        #     raw_node_str = fh.readline()
-        #     while raw_node_str:
-        #         add_node(remove_node_str_whitespace(raw_node_str))
-        #         raw_node_str = fh.readline()
-        #     print(f'Loaded {len(self.cluster_field.nodes)} nodes')
-
     def load_node_data(self, filename: str):
         with open(filename) as fh:
             metadata = fh.readline().split()
@@ -45,32 +24,7 @@ class BigCluster():
                 raw_node_str = fh.readline()
             print(f'Loaded {len(self.cluster_field.nodes)} nodes')
 
-
     def add_relevant_edges(self):
-
-        def calculate_possible_neighbors_iter(node_str: str) -> list:
-
-            def swap_digit(binary_digit: str):
-                if binary_digit == '1':
-                    return '0'
-                elif binary_digit == '0':
-                    return '1'
-                else:
-                    raise ValueError('non-binary string value found')
-
-            possible_edge_costs = range(self.min_spacing)
-            possible_neighbors = [set() for cost in possible_edge_costs] # [{possible neighbors of cost 1}, {of cost 2}, ...]
-            positions = [i for i in range(len(node_str))]
-            neighbor_cost_index = 0
-            for edge_cost in possible_edge_costs:
-                        swap_indices = itertools.combinations(positions, edge_cost)
-                        for swap_index_tup in swap_indices:
-                            node_str_swapping = list(node_str)
-                            for index in swap_index_tup:
-                                node_str_swapping[index] = swap_digit(node_str_swapping[index])
-                            possible_neighbors[neighbor_cost_index].add(''.join(node_str_swapping))
-                        neighbor_cost_index += 1
-            return possible_neighbors
 
         def find_present_neighbors(possible_neighbors: list) -> list:
             present_neighbors = [set() for edge_cost_possible_neighbors in possible_neighbors]
@@ -93,10 +47,26 @@ class BigCluster():
 
 
         for node_str in self.cluster_field.nodes:
-            possible_neighbors = calculate_possible_neighbors_iter(node_str)
+            possible_neighbors = self._calculate_possible_neighbors_iter(node_str)
             present_neighbors = find_present_neighbors(possible_neighbors)
             add_edges(node_str, present_neighbors)
    
+
+    def _calculate_possible_neighbors_iter(self, node_str: str) -> list:
+
+        possible_edge_costs = range(self.min_spacing)
+        possible_neighbors = [set() for cost in possible_edge_costs] # [{possible neighbors of cost 1}, {of cost 2}, ...]
+        positions = [i for i in range(len(node_str))]
+        neighbor_cost_index = 0
+        for edge_cost in possible_edge_costs:
+                    swap_indices = itertools.combinations(positions, edge_cost)
+                    for swap_index_tup in swap_indices:
+                        node_str_swapping = list(node_str)
+                        for index in swap_index_tup:
+                            node_str_swapping[index] = _swap_digit(node_str_swapping[index])
+                        possible_neighbors[neighbor_cost_index].add(''.join(node_str_swapping))
+                    neighbor_cost_index += 1
+        return possible_neighbors
 
     def get_k_min_spacing(self):
 
@@ -116,6 +86,13 @@ class BigCluster():
             except StopIteration:  # upon exhausting all edges under the minimum spacing
                 return len(self.cluster_field.component_sizes)
 
+def _swap_digit(binary_digit: str):
+    if binary_digit == '1':
+        return '0'
+    elif binary_digit == '0':
+        return '1'
+    else:
+        raise ValueError('non-binary string value found')
 
 if __name__ == '__main__':
     
