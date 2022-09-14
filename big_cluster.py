@@ -60,13 +60,7 @@ class BigCluster:
         return present_neighbors
 
     def get_k_min_spacing(self):
-
-        def yield_edges(self):
-            for edge_cost in self.edge_endpoints:  # this depends on self.edge_endpoints being sorted
-                edges = self.edge_endpoints[edge_cost]
-                while edges:
-                    yield edge_cost, edges.pop()
-        edge_generator = yield_edges(self)
+        edge_generator = self._yield_edges()
         cost_and_endpoints = next(edge_generator)
         while cost_and_endpoints:
             cost, u, v = cost_and_endpoints[0], cost_and_endpoints[1][0], cost_and_endpoints[1][1]
@@ -76,6 +70,12 @@ class BigCluster:
                 cost_and_endpoints = next(edge_generator)
             except StopIteration:  # upon exhausting all edges under the minimum spacing
                 return len(self.cluster_field.component_sizes)
+
+    def _yield_edges(self):
+        for edge_cost in self.edge_endpoints:  # this depends on self.edge_endpoints being sorted
+            edges = self.edge_endpoints[edge_cost]
+            while edges:
+                yield edge_cost, edges.pop()
 
 def _swap_digit(binary_digit: str):
     if binary_digit == '1':
@@ -101,3 +101,4 @@ if __name__ == '__main__':
         result = cluster_test.get_k_min_spacing()
         get_k_finish = time.time()
         print(f'Calculated k={result} clusters in {get_k_finish-get_k_start}s \n')
+        
